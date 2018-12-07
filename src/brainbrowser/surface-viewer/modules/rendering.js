@@ -262,12 +262,14 @@ BrainBrowser.SurfaceViewer.modules.rendering = function(viewer) {
   * viewer.drawDot(10, 5, 15, 3, 0x00FF00);
   * ```
   */
-  viewer.drawDot = function(x, y, z, radius, color) {
+  viewer.drawDot = function(x, y, z, radius, color, inputWidthSegments, inputHeightSegments) {
     radius = radius || 2;
     radius = radius >= 0 ? radius : 0;
     color  = color  >= 0 ? color  : 0xFF0000;
+    inputWidthSegments = inputWidthSegments || 10;
+    inputHeightSegments = inputHeightSegments || 10;
 
-    var geometry = new THREE.SphereGeometry(radius);
+    var geometry = new THREE.SphereGeometry(radius, inputWidthSegments, inputHeightSegments);
     var material = new THREE.MeshBasicMaterial({color: color});
 
     var sphere   = new THREE.Mesh(geometry, material);

@@ -622,6 +622,20 @@ $(function() {
     function setCenterRotation() {
       var offset = viewer.model.userData.model_center_offset || new THREE.Vector3(0,0,0);
       var center = new THREE.Vector3(parseFloat($("#pick-x").html()) + -offset.x, parseFloat($("#pick-y").html()) + -offset.y, parseFloat($("#pick-z").html()) + -offset.z);
+      
+      
+      
+      viewer.model.children.forEach(function(children) {
+        console.log('child',children)
+        if(children.name === 'left'){
+          children.position.x = center.x  + offset.x;
+          children.position.y = center.y  + offset.y;
+          children.position.z = center.z  + offset.z;
+          console.log(offset,'offset')
+        }
+
+      });
+      console.log('children',viewer.model.children);
       viewer.changeCenterRotation(center);
     }
 
@@ -733,6 +747,14 @@ $(function() {
             cancel: defaultCancelOptions(current_request),
             parse: { split: true }
           });
+          
+          //Draw sphere
+          var geometry = new THREE.SphereGeometry(10, 23, 23);
+          var material = new THREE.MeshBasicMaterial({color: 0x00FF00});
+          var sphere   = new THREE.Mesh(geometry, material);
+          sphere.position.set(0, 20, 10);
+          viewer.model.add(sphere);
+        
         },
         dti: function() {
           viewer.loadModelFromURL("models/dti.obj", {
